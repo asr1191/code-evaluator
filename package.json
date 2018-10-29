@@ -4,7 +4,7 @@
   "description": "REPL for different compilers.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./src/test/index.test.js"
   },
   "author": "Amal S Raj <amalsraj95@gmail.com>",
   "license": "ISC"

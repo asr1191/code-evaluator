@@ -1,4 +1,9 @@
-codeEvaluator = require('../index')
+let codeEvaluator = require('../index');
 
-evaluator = new codeEvaluator('testlanguage','hello','world')
-console.log(evaluator.evaluateCode())
+let evalInstance = {
+  language: 'testlanguage',
+  input: 'hello',
+  code: 'world'
+};
+let evaluator = codeEvaluator(evalInstance);
+console.log(evaluator.evaluateCode());

@@ -7,5 +7,10 @@
     "test": "node ./src/test/index.test.js"
   },
   "author": "Amal S Raj <amalsraj95@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
 }

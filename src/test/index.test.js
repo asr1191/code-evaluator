@@ -3,7 +3,7 @@ async function TestFunction(){
   let evalInstance = {
     language: 'testlanguage',
     input: 'jessal',
-    code: 'print(\'apple\')'
+    code: 'name = raw_input()\nprint(name)'
   };
   let evaluator = codeEvaluator(evalInstance);
   evaluator.evaluateCode(1).then(() => {

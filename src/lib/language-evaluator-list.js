@@ -1,6 +1,5 @@
+const testlanguage = require('./languages/testlanguage')
+
 module.exports = {
-  'testlanguage': function (input, code, fileName) {
-    return input + code + fileName;
-  },
-  
+  'testlanguage': testlanguage
 };

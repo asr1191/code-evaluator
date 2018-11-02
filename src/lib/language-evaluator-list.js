@@ -1,6 +1,6 @@
 module.exports = {
-  'testlanguage': function (input, code) {
-    return input + code;
+  'testlanguage': function (input, code, fileName) {
+    return input + code + fileName;
   },
   
 };

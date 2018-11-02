@@ -1,9 +1,14 @@
 let codeEvaluator = require('../index');
+async function TestFunction(){
+  let evalInstance = {
+    language: 'testlanguage',
+    input: 'jessal',
+    code: 'print(\'apple\')'
+  };
+  let evaluator = codeEvaluator(evalInstance);
+  evaluator.evaluateCode(1).then(() => {
+    console.log(evaluator.resultSet)
+  });
+}
 
-let evalInstance = {
-  language: 'testlanguage',
-  input: 'hello',
-  code: 'world'
-};
-let evaluator = codeEvaluator(evalInstance);
-console.log(evaluator.evaluateCode());
+TestFunction();

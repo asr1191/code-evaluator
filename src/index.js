@@ -6,15 +6,18 @@ function createEvaluator(evalInstance) {
     'language': evalInstance.language,
     'input': evalInstance.input,
     'code': evalInstance.code,
+    'fileName': '',
+    'resultSet': '',
 
-    'evaluateCode': function evaluateCode(id) {
-      //TODO Set Callback
-      this.fileLocation = saveCode();
-
-      //TODO List compatibility for Input
-      let languageEvaluator = languageEvaluatorList[this.language];
-      let resultSet = languageEvaluator(this.input, this.code, this.fileLocation);
-      return resultSet;
+    'evaluateCode':function evaluateCode(id) {
+      return new Promise((resolve, reject) => {
+        saveCode(id, evalInstance).then((fileName)=>{
+          this.fileName = fileName;
+          let languageEvaluator = languageEvaluatorList[this.language];
+          this.resultSet = languageEvaluator(this.input, this.code, this.fileName);
+          resolve();
+        })
+      }) 
     }
   };
   return evaluator;

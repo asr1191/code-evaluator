@@ -1,16 +1,22 @@
 const fs = require('fs');
 
-function writeCode(id, evalInstance) {
-  let filename = evalInstance.language + id;
-  fs.writeFile(filename, evalInstance.code, (err) => {
-    if (err) throw err;
-    console.log(`The file ${filename} has been saved!`);
-    saveCode();
-  });
-}
+const replInstanceLocation = './replInstances/';
 
-function saveCode(){
 
+function saveCode(id, evalInstance) {
+  return new Promise((resolve, reject) => {
+    
+    let fileName = evalInstance.language + id;
+    let fileLocation = replInstanceLocation + fileName;
+
+    fs.writeFile(fileLocation, evalInstance.code, (err) => {
+      if (err){
+        throw err;
+      } else {
+        resolve(fileName);
+      }
+    })
+  })
 }
 
 module.exports = saveCode;

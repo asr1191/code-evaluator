@@ -1,7 +1,7 @@
-module.exports = function testlanguage(input, code, filename){
+module.exports = function testlanguage(filename){
   return new Promise((resolve, reject) => {
     let resultSet = {
-      stdout:input,
+      stdout:'jessal',
       stderr:''
     }
     setTimeout(()=>{

@@ -12,7 +12,7 @@ function createEvaluator(evalInstance) {
     'evaluateCode':async function evaluateCode(id) {
       this.fileName = await saveCode(id, evalInstance)
       let languageEvaluator = languageFunctions[this.language];
-      this.resultSet = await languageEvaluator(this.input, this.code, this.fileName);
+      this.resultSet = await languageEvaluator(this.fileName);
 
     }
   };

@@ -9,15 +9,11 @@ function createEvaluator(evalInstance) {
     'fileName': '',
     'resultSet': '',
 
-    'evaluateCode':function evaluateCode(id) {
-      return new Promise((resolve, reject) => {
-        saveCode(id, evalInstance).then((fileName)=>{
-          this.fileName = fileName;
-          let languageEvaluator = languageFunctions[this.language];
-          this.resultSet = languageEvaluator(this.input, this.code, this.fileName);
-          resolve();
-        })
-      }) 
+    'evaluateCode':async function evaluateCode(id) {
+      this.fileName = await saveCode(id, evalInstance)
+      let languageEvaluator = languageFunctions[this.language];
+      this.resultSet = await languageEvaluator(this.input, this.code, this.fileName);
+
     }
   };
   return evaluator;

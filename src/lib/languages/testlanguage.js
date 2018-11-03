@@ -1,9 +1,11 @@
 module.exports = function testlanguage(input, code, filename){
-  let resultSet = {
-    stdout:input,
-    stderr:''
-  }
-  // setTimeout(()=>{
-    return resultSet
-  // },500);
+  return new Promise((resolve, reject) => {
+    let resultSet = {
+      stdout:input,
+      stderr:''
+    }
+    setTimeout(()=>{
+      resolve(resultSet)
+    },500);
+  });
 }

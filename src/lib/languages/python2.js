@@ -1,10 +1,10 @@
 let childProcess = require('child_process');
-const replInstancesLocation = './../../../../replInstances';
+const replInstancesLocation = './replInstances';
 
-function python2(input, code, fileName) {
+function python2(fileName) {
   return new Promise((resolve, reject) =>{
     let codeLocation = `${replInstancesLocation}/userCode/${fileName}`;
-    let inputLocation = `${replInstancesLocation}/inputFiles/${fileName}`;
+    let inputLocation = `${replInstancesLocation}/inputFiles/${fileName}.input`;
 
     function handleExecOutput(err, stdout, stderr){  
       if (err){

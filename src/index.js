@@ -1,4 +1,4 @@
-let languageEvaluatorList = require('./lib/language-evaluator-list');
+let languageFunctions = require('./lib/languages');
 let saveCode = require('./lib/save-code');
 
 function createEvaluator(evalInstance) {
@@ -13,7 +13,7 @@ function createEvaluator(evalInstance) {
       return new Promise((resolve, reject) => {
         saveCode(id, evalInstance).then((fileName)=>{
           this.fileName = fileName;
-          let languageEvaluator = languageEvaluatorList[this.language];
+          let languageEvaluator = languageFunctions[this.language];
           this.resultSet = languageEvaluator(this.input, this.code, this.fileName);
           resolve();
         })

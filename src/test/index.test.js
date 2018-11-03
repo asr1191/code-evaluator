@@ -9,7 +9,9 @@ async function TestFunction(){
   };
 
   let evaluator = codeEvaluator(evalInstance);
-  await evaluator.evaluateCode(1)
+  //passing an ID of 1 to the evaluator object, so that each compile request
+  //can be referred to using its ID
+  await evaluator.evaluateCode(1) 
   console.log(evaluator.resultSet)
   
 }

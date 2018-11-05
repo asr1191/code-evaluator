@@ -10,9 +10,13 @@ function createEvaluator(evalInstance) {
     resultSet: '',
 
     evaluateCode: async function evaluateCode(id) {
-      this.fileName = await saveCode(id, evalInstance);
-      const languageEvaluator = languageFunctions[this.language];
-      this.resultSet = await languageEvaluator(this.fileName);
+      try {
+        this.fileName = await saveCode(id, evalInstance);
+        const languageEvaluator = languageFunctions[this.language];
+        this.resultSet = await languageEvaluator(this.fileName);
+      } catch (Err) {
+        throw Err;
+      }
     },
   };
   return evaluator;

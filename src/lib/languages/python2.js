@@ -9,7 +9,7 @@ function python2(fileName) {
 
     function handleExecOutput(err, stdout, stderr) {
       if (err) {
-        console.log(`ERROR OBJ: ${err}`);
+        console.log(err);
         reject(err);
       } else {
         resolve({
@@ -19,7 +19,7 @@ function python2(fileName) {
       }
     }
 
-    childProcess.exec(`python2 ${codeLocation} < ${inputLocation}`, handleExecOutput);
+    childProcess.exec(`python2 ${codeLocation} < ${inputLocation}`, { timeout: 10 }, handleExecOutput);
   });
 }
 

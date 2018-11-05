@@ -11,9 +11,16 @@ async function TestFunction() {
   const evaluator = codeEvaluator(evalInstance);
   // passing an ID of 1 to the evaluator object, so that each compile request
   // can be referred to using its ID
-  await evaluator.evaluateCode(1);
-  console.log(`stdout: ${evaluator.resultSet.stdout}`);
-  console.log(`stderr: ${evaluator.resultSet.stderr}`);
+  try {
+    await evaluator.evaluateCode(1);
+    console.log(`stdout: ${evaluator.resultSet.stdout}`);
+    console.log(`stderr: ${evaluator.resultSet.stderr}`);
+  } catch (e) {
+    console.log('Red Alert!');
+    if (e.code === 'EEXIST') {
+      console.log('Compilation Error! Exiting!');
+    }
+  }
 }
 
 TestFunction();

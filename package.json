@@ -10,7 +10,9 @@
   },
   "author": "Amal S Raj <amalsraj95@gmail.com>",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.8.0",

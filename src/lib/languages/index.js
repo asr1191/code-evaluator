@@ -1,9 +1,9 @@
-let c = require('./c');
-let cpp = require('./cpp');
-let java = require('./java');
-let python2 = require('./python2');
-let python3 = require('./python3');
-let testlanguage = require('./testlanguage');
+const c = require('./c');
+const cpp = require('./cpp');
+const java = require('./java');
+const python2 = require('./python2');
+const python3 = require('./python3');
+const testlanguage = require('./testlanguage');
 
 module.exports = {
   c,
@@ -12,4 +12,4 @@ module.exports = {
   python2,
   python3,
   testlanguage,
-}
+};

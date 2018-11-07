@@ -18,7 +18,7 @@ function python3(fileName) {
       }
     }
 
-    childProcess.exec(`python3 ${codeLocation} < ${inputLocation}`, handleExecOutput);
+    childProcess.exec(`python3 ${codeLocation} < ${inputLocation}`, { timeout: 10 }, handleExecOutput);
   });
 }
 

@@ -1,4 +1,4 @@
-const codeEvaluator = require('../index');
+const codeEvaluator = require('../src/index');
 
 // can be used in an Express get() or post() functions.
 async function expressPOST(res, req, next) {
@@ -19,9 +19,9 @@ async function expressPOST(res, req, next) {
     console.log(`stderr: ${evaluator.resultSet.stderr}`);
 
   // MUST specify behavior on:
-  //  1. finding existing code file. (Error Code: CODE_EXISTS)
-  //  2. finding existing input file. (Error Code: INPUT_EXISTS)
-  //  3. compilers/interpreters not installed (Error Code: COMPINT_UNAVAILABLE)
+  //  1. Finding existing code file. (Error Code: CODE_EXISTS)
+  //  2. Finding existing input file. (Error Code: INPUT_EXISTS)
+  //  3. Compilers/interpreters not installed (Error Code: COMPINT_UNAVAILABLE)
   } catch (e) {
     if (e.code === 'CODE_EXISTS') {
       console.log('Codefile exists. Check ID');

@@ -29,6 +29,9 @@ function createEvaluator(evalInstance) {
         const languageEvaluator = languageFunctions[this.language];
         this.resultSet = await languageEvaluator(this.fileName);
       } catch (Err) {
+        if (Err.code === 127) {
+          Err.code = 'COMPINT_UNAVAILABLE';
+        }
         throw Err;
       }
     },

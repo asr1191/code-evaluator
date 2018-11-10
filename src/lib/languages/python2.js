@@ -9,7 +9,6 @@ function python2(fileName) {
 
     function handleExecOutput(err, stdout, stderr) {
       if (err) {
-        console.log(err);
         reject(err);
       } else {
         resolve({

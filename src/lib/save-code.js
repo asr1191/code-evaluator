@@ -1,12 +1,10 @@
 const fs = require('fs');
+const path = require('path');
 const {
   promisify,
 } = require('util');
 
 const writeFile = promisify(fs.writeFile);
-
-const replInstanceLocation = './replInstances';
-
 /**
  * Saves code into onto userCode and input into inputFiles directories
  * respectively, according to their language and id.
@@ -16,10 +14,11 @@ const replInstanceLocation = './replInstances';
  * @param {string} id
  * @param {EvalInstance} evalInstance
  */
-async function saveCode(id, evalInstance) {
+async function saveCode(id, evalInstance, codeDir, inputDir) {
   const fileName = `${evalInstance.language}_${id}`;
-  const codeLocation = `${replInstanceLocation}/codeFiles/${fileName}`;
-  const inputLocation = `${replInstanceLocation}/inputFiles/${fileName}.input`;
+  console.log(process.cwd());
+  const codeLocation = path.resolve(process.cwd(), codeDir, fileName);
+  const inputLocation = path.resolve(process.cwd(), inputDir, `${fileName}.input`);
 
   try {
     await writeFile(codeLocation, evalInstance.code, { flag: 'wx' });

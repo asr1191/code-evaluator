@@ -6,13 +6,17 @@ const saveCode = require('./lib/save-code');
  * @function
  * @constructor
  * @param {evalInstance} evalInstance
+ * @param {codeDir} string
+ * @param {inputDir} string
  */
-function createEvaluator(evalInstance) {
+function createEvaluator(evalInstance, codeDir, inputDir) {
   const evaluator = {
     language: evalInstance.language,
-    input: evalInstance.input,
     code: evalInstance.code,
+    input: evalInstance.input,
     fileName: '',
+    inputDir,
+    codeDir,
     resultSet: {
       stdout: '',
       stderr: '',
@@ -25,7 +29,7 @@ function createEvaluator(evalInstance) {
      */
     evaluateCode: async function evaluateCode(id) {
       try {
-        this.fileName = await saveCode(id, evalInstance);
+        this.fileName = await saveCode(id, evalInstance, this.codeDir, this.inputDir);
         const languageEvaluator = languageFunctions[this.language];
         this.resultSet = await languageEvaluator(this.fileName);
       } catch (Err) {

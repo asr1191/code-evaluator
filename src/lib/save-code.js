@@ -18,7 +18,7 @@ const replInstanceLocation = './replInstances';
  */
 async function saveCode(id, evalInstance) {
   const fileName = `${evalInstance.language}_${id}`;
-  const codeLocation = `${replInstanceLocation}/userCode/${fileName}`;
+  const codeLocation = `${replInstanceLocation}/codeFiles/${fileName}`;
   const inputLocation = `${replInstanceLocation}/inputFiles/${fileName}.input`;
 
   try {

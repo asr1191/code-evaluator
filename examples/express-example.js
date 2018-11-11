@@ -1,7 +1,7 @@
 const codeEvaluator = require('../src/index');
 
 // Paths to store code and inputs, which will later be run using the
-// evaluateCode() method.
+// saveCode() and runCode() methods.
 const codeDir = '../replInstances/codeFiles/';
 const inputDir = '../replInstances/inputFiles/';
 
@@ -22,10 +22,11 @@ async function expressPOST() {
   // passing an ID to the evaluator object, so that each compile request
   // can be referred to using its ID. Can be a number or string.
   try {
-    await evaluator.evaluateCode(5);
+    await evaluator.saveCode(5);
+    await evaluator.runCode();
     // await evaluator.runCode()
     // If evaluation should happen with existing code and input files, the
-    // runCode() method can be called instead of evaluateCode()
+    // runCode() method can be called instead of saveCode()
     console.log(`stdout: ${evaluator.resultSet.stdout}`);
     console.log(`stderr: ${evaluator.resultSet.stderr}`);
 

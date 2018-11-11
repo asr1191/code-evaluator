@@ -30,12 +30,19 @@ function createEvaluator(evalInstance, codeDir, inputDir) {
     evaluateCode: async function evaluateCode(id) {
       try {
         this.fileName = await saveCode(id, evalInstance, this.codeDir, this.inputDir);
-        const languageEvaluator = languageFunctions[this.language];
-        this.resultSet = await languageEvaluator(this.fileName);
+        await this.runCode();
       } catch (Err) {
         if (Err.code === 127) {
           Err.code = 'COMPINT_UNAVAILABLE';
         }
+        throw Err;
+      }
+    },
+    runCode: async function runCode() {
+      try {
+        const languageEvaluator = languageFunctions[this.language];
+        this.resultSet = await languageEvaluator(this.fileName, this.codeDir, this.inputDir);
+      } catch (Err) {
         throw Err;
       }
     },

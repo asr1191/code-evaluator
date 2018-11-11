@@ -1,11 +1,10 @@
 const childProcess = require('child_process');
+const path = require('path');
 
-const replInstancesLocation = './replInstances';
-
-function python2(fileName) {
+function python2(fileName, codeDir, inputDir) {
   return new Promise((resolve, reject) => {
-    const codeLocation = `${replInstancesLocation}/userCode/${fileName}`;
-    const inputLocation = `${replInstancesLocation}/inputFiles/${fileName}.input`;
+    const codeFileLocation = path.resolve(codeDir, fileName);
+    const inputFileLocation = path.resolve(inputDir, `${fileName}.input`);
 
     function handleExecOutput(err, stdout, stderr) {
       if (err) {
@@ -18,7 +17,7 @@ function python2(fileName) {
       }
     }
 
-    childProcess.exec(`python2 ${codeLocation} < ${inputLocation}`, { timeout: 10 }, handleExecOutput);
+    childProcess.exec(`python2 ${codeFileLocation} < ${inputFileLocation}`, { timeout: 10 }, handleExecOutput);
   });
 }
 

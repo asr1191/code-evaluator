@@ -6,8 +6,10 @@ const codeDir = '../replInstances/codeFiles/';
 const inputDir = '../replInstances/inputFiles/';
 
 // can be used in an Express get() or post() functions.
-async function expressPOST(res, req, next) {
+async function expressPOST() {
   const evalInstance = {
+    // testlanguage is an example language, which returns a sample STDOUT and
+    // STDIN message, after a delay of 500ms.
     language: 'testlanguage',
     input: 'jessal kid',
     code: 'name = raw_input().split(" ")\nprint(name[0] + " is a good " + name[1])',
@@ -17,8 +19,8 @@ async function expressPOST(res, req, next) {
   // the user's code and inputs that are to be run against the code.
   const evaluator = codeEvaluator(evalInstance, codeDir, inputDir);
 
-  // passing an ID of 1 to the evaluator object, so that each compile request
-  // can be referred to using its ID
+  // passing an ID to the evaluator object, so that each compile request
+  // can be referred to using its ID. Can be a number or string.
   try {
     await evaluator.evaluateCode(5);
     // await evaluator.runCode()
@@ -26,6 +28,10 @@ async function expressPOST(res, req, next) {
     // runCode() method can be called instead of evaluateCode()
     console.log(`stdout: ${evaluator.resultSet.stdout}`);
     console.log(`stderr: ${evaluator.resultSet.stderr}`);
+
+    // Calling clearFiles() to delete the code and input files that were
+    // created.
+    await evaluator.clearFiles();
 
   // MUST specify behavior on:
   //  1. Finding existing code file. (Error Code: CODE_EXISTS)

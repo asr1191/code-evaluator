@@ -16,7 +16,6 @@ const writeFile = promisify(fs.writeFile);
  */
 async function saveCode(id, evalInstance, codeDir, inputDir) {
   const fileName = `${evalInstance.language}_${id}`;
-  console.log(process.cwd());
   const codeLocation = path.resolve(process.cwd(), codeDir, fileName);
   const inputLocation = path.resolve(process.cwd(), inputDir, `${fileName}.input`);
 

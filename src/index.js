@@ -1,6 +1,10 @@
+const fs = require('fs');
+const path = require('path');
+const { promisify } = require('util');
 const languageFunctions = require('./lib/languages');
 const saveCode = require('./lib/save-code');
 
+const fsUnlink = promisify(fs.unlink);
 /**
  * Returns a CodeEvaluator object, given an evalInstance object as argument.
  * @function
@@ -42,6 +46,14 @@ function createEvaluator(evalInstance, codeDir, inputDir) {
       try {
         const languageEvaluator = languageFunctions[this.language];
         this.resultSet = await languageEvaluator(this.fileName, this.codeDir, this.inputDir);
+      } catch (Err) {
+        throw Err;
+      }
+    },
+    clearFiles: async function clearFiles() {
+      try {
+        await fsUnlink(path.resolve(this.codeDir, this.fileName));
+        await fsUnlink(path.resolve(this.inputDir, `${this.fileName}.input`));
       } catch (Err) {
         throw Err;
       }

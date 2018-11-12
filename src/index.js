@@ -14,14 +14,14 @@ const fsUnlink = promisify(fs.unlink);
  * @param {codeDir} string
  * @param {inputDir} string
  */
-function createEvaluator(evalInstance, codeDir, inputDir) {
+function createEvaluator(evalInstance, codeDirectory, inputDirectory) {
   const evaluator = {
     language: evalInstance.language,
     code: evalInstance.code,
     input: evalInstance.input,
     fileName: '',
-    inputDir,
-    codeDir,
+    codeDir: path.resolve(path.dirname(module.parent.filename), codeDirectory),
+    inputDir: path.resolve(path.dirname(module.parent.filename), inputDirectory),
     resultSet: {
       stdout: '',
       stderr: '',

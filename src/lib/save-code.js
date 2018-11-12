@@ -16,8 +16,8 @@ const writeFile = promisify(fs.writeFile);
  */
 async function saveCode(id, evalInstance, codeDir, inputDir) {
   const fileName = `${evalInstance.language}_${id}`;
-  const codeLocation = path.resolve(process.cwd(), codeDir, fileName);
-  const inputLocation = path.resolve(process.cwd(), inputDir, `${fileName}.input`);
+  const codeLocation = path.resolve(codeDir, fileName);
+  const inputLocation = path.resolve(inputDir, `${fileName}.input`);
 
   try {
     await writeFile(codeLocation, evalInstance.code, { flag: 'wx' });

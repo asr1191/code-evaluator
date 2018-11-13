@@ -17,7 +17,7 @@ function python2(fileName, codeDir, inputDir) {
       }
     }
 
-    childProcess.exec(`python2 ${codeFileLocation} < ${inputFileLocation}`, { timeout: 10 }, handleExecOutput);
+    childProcess.exec(`python2 ${codeFileLocation} < ${inputFileLocation}`, { timeout: 10000 }, handleExecOutput);
   });
 }
 

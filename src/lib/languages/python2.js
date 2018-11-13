@@ -7,7 +7,7 @@ function python2(fileName, codeDir, inputDir) {
     const inputFileLocation = path.resolve(inputDir, `${fileName}.input`);
 
     function handleExecOutput(err, stdout, stderr) {
-      if (err) {
+      if (err || err.code !== 1) {
         reject(err);
       } else {
         resolve({

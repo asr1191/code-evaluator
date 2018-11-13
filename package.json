@@ -1,6 +1,6 @@
 {
   "name": "code-evaluator",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "REPL for different compilers.",
   "main": "./src/index.js",
   "scripts": {
@@ -10,9 +10,7 @@
   },
   "author": "Amal S Raj <amalsraj95@gmail.com>",
   "license": "ISC",
-  "dependencies": {
-    "lodash": "^4.17.11"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.8.0",

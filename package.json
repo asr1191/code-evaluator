@@ -1,6 +1,6 @@
 {
   "name": "code-evaluator",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "REPL for different compilers.",
   "main": "./src/index.js",
   "scripts": {

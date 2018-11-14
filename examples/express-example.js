@@ -4,6 +4,7 @@ const codeEvaluator = require('../src/index');
 // saveCode() and runCode() methods.
 const codeDir = '../replInstances/codeFiles/';
 const inputDir = '../replInstances/inputFiles/';
+const compileDir = '../replInstances/binaries/';
 
 // can be used in an Express get() or post() functions.
 async function expressPOST() {
@@ -17,7 +18,7 @@ async function expressPOST() {
   // Calling CodeEvaluator constructor function with an EvalInstance as
   // arguement to return a CodeEvaluator object, along with paths to store
   // the user's code and inputs that are to be run against the code.
-  const evaluator = codeEvaluator(evalInstance, codeDir, inputDir);
+  const evaluator = codeEvaluator(evalInstance, codeDir, inputDir, compileDir);
 
   // passing an ID to the evaluator object, so that each compile request
   // can be referred to using its ID. Can be a number or string.

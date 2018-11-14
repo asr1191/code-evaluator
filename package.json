@@ -4,7 +4,6 @@
   "description": "REPL for different compilers.",
   "main": "./src/index.js",
   "scripts": {
-    "test": "node ./src/test/index.test.js",
     "lint": "eslint ./src/",
     "lint-fix": "eslint --fix ./src/"
   },

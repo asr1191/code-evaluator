@@ -1,6 +1,6 @@
 {
   "name": "code-evaluator",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "API that compiles/interprets source code for different languages and returns their outputs.",
   "homepage": "https://github.com/asr1191/code-evaluator#readme",
   "bugs": "https://github.com/asr1191/code-evaluator/issues",
@@ -13,7 +13,7 @@
     "lint-fix": "eslint --fix ./src/"
   },
   "author": "Amal S Raj <amalsraj95@gmail.com>",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "dependencies": {},
   "devDependencies": {
     "chai": "^4.2.0",

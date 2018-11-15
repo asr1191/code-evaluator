@@ -31,12 +31,12 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
     compileDir: path.resolve(parentModuleDirectory, compileDirRelative),
 
     languageEvaluator: languageEvaluatorObjects[evalInstance.language],
-    languageEvaluatorInstance: this.languageEvaluator(
-      this.fileName,
-      this.codeDir,
-      this.inputDir,
-      this.compileDir,
-    ),
+    // languageEvaluatorInstance: this.languageEvaluator(
+    //   this.fileName,
+    //   this.codeDir,
+    //   this.inputDir,
+    //   this.compileDir,
+    // ),
 
     resultSet: {
       stdout: '',
@@ -49,7 +49,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    saveCode: async function saveCode(id) {
+    saveCode: async function (id) {
       try {
         this.fileName = await saveCodeFn(id, evalInstance, this.codeDir);
       } catch (Err) {
@@ -63,7 +63,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    saveInput: async function saveInput(id) {
+    saveInput: async function (id) {
       try {
         this.fileName = await saveInputFn(id, evalInstance, this.inputDir);
       } catch (Err) {
@@ -76,14 +76,22 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    compileCode: async function compileCode() {
+    compileCode: async function () {
+      const languageEvaluatorInstance = this.languageEvaluator(
+        this.fileName,
+        this.codeDir,
+        this.inputDir,
+        this.compileDir,
+      )
       try {
-        if (this.languageEvaluatorInstance.compileCode) {
-          this.resultSet = await this.languageEvaluatorInstance.compileCode();
+        if (languageEvaluatorInstance.isCompilable) {
+          console.log(`${this.language} is compilable.`);
+          this.resultSet = await languageEvaluatorInstance.compileCode();
         } else {
           console.err(`${this.language} does not need compilation`);
         }
       } catch (Err) {
+        Err.code = "COMP_ERROR";
         throw Err;
       }
     },
@@ -92,9 +100,15 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    runCode: async function runCode() {
+    runCode: async function () {
+      const languageEvaluatorInstance = this.languageEvaluator(
+        this.fileName,
+        this.codeDir,
+        this.inputDir,
+        this.compileDir,
+      )
       try {
-        this.resultSet = await this.languageEvaluatorInstance.runCode();
+        this.resultSet = await languageEvaluatorInstance.runCode();
       } catch (Err) {
         if (Err.code === 127) {
           Err.code = 'COMPINT_UNAVAILABLE';
@@ -109,20 +123,24 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    clearFiles: async function clearFiles() {
+    clearFiles: async function () {
+      const languageEvaluatorInstance = this.languageEvaluator(
+        this.fileName,
+        this.codeDir,
+        this.inputDir,
+        this.compileDir,
+      )
       try {
         await fsUnlink(path.resolve(this.codeDir, this.fileName));
         await fsUnlink(path.resolve(this.inputDir, `${this.fileName}.input`));
-        if (this.languageEvaluatorInstance.isCompilable) {
+        if (languageEvaluatorInstance.isCompilable) {
           await fsUnlink(path.resolve(this.compileDir, `${this.fileName}.out`));
         }
       } catch (Err) {
-        console.err(Err.message);
+        console.log(Err.message);
       }
     },
   };
-
-
   return evaluator;
 }
 

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { promisify } = require('util');
+
 const languageEvaluatorObjects = require('./lib/languages');
 const saveCodeFn = require('./lib/save-code');
 const saveInputFn = require('./lib/save-input');
@@ -9,13 +10,14 @@ const fsUnlink = promisify(fs.unlink);
 const parentModuleDirectory = path.dirname(module.parent.filename);
 
 /**
- * Returns a CodeEvaluator object, given an evalInstance object as argument.
+ * Returns a CodeEvaluator object.
  *
  * @function
  * @constructor
- * @param {evalInstance} evalInstance
- * @param {codeDir} string
- * @param {inputDir} string
+ * @param {evalInstance} evalInstance contains `language` , `input`, and `code`.
+ * @param {codeDirRelative} string module relative directory for storing code files.
+ * @param {inputDirRelative} string module relative directory for storing input files.
+ * @param {compileDirRelative} string module relative directory for storing compiled binary files.
  */
 function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compileDirRelative) {
   const evaluator = {
@@ -23,9 +25,11 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
     code: evalInstance.code,
     input: evalInstance.input,
     fileName: '',
+
     codeDir: path.resolve(parentModuleDirectory, codeDirRelative),
     inputDir: path.resolve(parentModuleDirectory, inputDirRelative),
     compileDir: path.resolve(parentModuleDirectory, compileDirRelative),
+
     languageEvaluator: languageEvaluatorObjects[evalInstance.language],
     languageEvaluatorInstance: this.languageEvaluator(
       this.fileName,
@@ -33,59 +37,58 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
       this.inputDir,
       this.compileDir,
     ),
+
     resultSet: {
       stdout: '',
       stderr: '',
     },
     /**
-     * Method that takes in an id along with the object's properties to save
-     * the code and inputs to a file. Code file has no extension, while input
-     * files have an `.input` extension.
+     * Saves a codefile with the corresponding `id`.
      *
-     * @param {string} id
+     * @param {string} id used to identify code, input, binary files.
+     * @async
+     * @function
      */
     saveCode: async function saveCode(id) {
       try {
         this.fileName = await saveCodeFn(id, evalInstance, this.codeDir);
       } catch (Err) {
-        if (Err.code === 127) {
-          Err.code = 'COMPINT_UNAVAILABLE';
-        }
         throw Err;
       }
     },
     /**
-     * Method that takes in an id along with the object's properties to save
-     * the code and inputs to a file. Code file has no extension, while input
-     * files have an `.input` extension.
-     *
-     * @param {string} id
+     * Saves an input file with the corresponding `id`, with a `.input`
+     * extension.
+     * @param {string} id used to identify code, input, binary files.
+     * @async
+     * @function
      */
     saveInput: async function saveInput(id) {
       try {
         this.fileName = await saveInputFn(id, evalInstance, this.inputDir);
       } catch (Err) {
-        if (Err.code === 127) {
-          Err.code = 'COMPINT_UNAVAILABLE';
-        }
         throw Err;
       }
     },
     /**
-     * Method compiles code from existing codeFile and outputs to a file
+     * Compiles code from existing codeFile and outputs to a file
      * having the same filename with a `.out` extension.
      * @async
      * @function
      */
     compileCode: async function compileCode() {
       try {
-        this.resultSet = await this.languageEvaluatorInstance.compileCode();
+        if (this.languageEvaluatorInstance.compileCode) {
+          this.resultSet = await this.languageEvaluatorInstance.compileCode();
+        } else {
+          console.err(`${this.language} does not need compilation`);
+        }
       } catch (Err) {
         throw Err;
       }
     },
     /**
-     * Method that runs the code from existing code and input files
+     * Runs the code from existing code and input files.
      * @async
      * @function
      */
@@ -93,11 +96,14 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
       try {
         this.resultSet = await this.languageEvaluatorInstance.runCode();
       } catch (Err) {
+        if (Err.code === 127) {
+          Err.code = 'COMPINT_UNAVAILABLE';
+        }
         throw Err;
       }
     },
     /**
-     * Method that deleted the current CodeEvaluator object's associated code
+     * Deletes the current CodeEvaluator object's associated code
      * and input files.
      *
      * @async
@@ -107,7 +113,9 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
       try {
         await fsUnlink(path.resolve(this.codeDir, this.fileName));
         await fsUnlink(path.resolve(this.inputDir, `${this.fileName}.input`));
-        await fsUnlink(path.resolve(this.compileDir, `${this.fileName}.out`));
+        if (this.languageEvaluatorInstance.isCompilable) {
+          await fsUnlink(path.resolve(this.compileDir, `${this.fileName}.out`));
+        }
       } catch (Err) {
         console.err(Err.message);
       }

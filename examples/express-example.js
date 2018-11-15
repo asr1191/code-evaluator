@@ -25,6 +25,7 @@ async function expressPOST() {
   try {
     await evaluator.saveCode(5);
     await evaluator.saveInput(5);
+    await evaluator.compileCode();
     await evaluator.runCode();
     // await evaluator.runCode()
     // If evaluation should happen with existing code and input files, the
@@ -32,7 +33,7 @@ async function expressPOST() {
     console.log(`stdout: ${evaluator.resultSet.stdout}`);
     console.log(`stderr: ${evaluator.resultSet.stderr}`);
 
-    // Calling clearFiles() to delete the code and input files that were
+    // Calling clearFiles() to delete the code, input, and binary files that were
     // created.
     await evaluator.clearFiles();
 

@@ -1,24 +1,27 @@
 const childProcess = require('child_process');
 const path = require('path');
 
-function python2(fileName, codeDir, inputDir) {
-  return new Promise((resolve, reject) => {
-    const codeFileLocation = path.resolve(codeDir, fileName);
-    const inputFileLocation = path.resolve(inputDir, `${fileName}.input`);
+function python3(fileName, codeDir, inputDir) {
+  const languageEvaluatorObject = {
+    isCompilable: false,
+    codeFileLocation: path.resolve(codeDir, fileName),
+    inputFileLocation: path.resolve(inputDir, `${fileName}.input`),
 
-    function handleExecOutput(err, stdout, stderr) {
-      if (err && err.code !== 1) {
-        reject(err);
-      } else {
-        resolve({
-          stdout,
-          stderr,
-        });
+    runCode: async function runCode() {
+      function handleExecOutput(err, stdout, stderr) {
+        if (err && err.code !== 1) {
+          throw err;
+        } else {
+          return {
+            stdout,
+            stderr,
+          };
+        }
       }
-    }
-
-    childProcess.exec(`python3 ${codeFileLocation} < ${inputFileLocation}`, { timeout: 10000 }, handleExecOutput);
-  });
+      childProcess.exec(`python3 ${this.codeFileLocation} < ${this.inputFileLocation}`, { timeout: 10000 }, handleExecOutput);
+    },
+  };
+  return languageEvaluatorObject;
 }
 
-module.exports = python2;
+module.exports = python3;

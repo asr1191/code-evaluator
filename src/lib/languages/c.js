@@ -3,6 +3,7 @@ const path = require('path');
 
 function c(fileName, codeDir, inputDir, compileDir) {
   const languageEvaluatorObject = {
+    isCompilable: true,
     codeFileLocation: path.resolve(codeDir, fileName),
     inputFileLocation: path.resolve(inputDir, `${fileName}.input`),
     compileFileLocation: path.resolve(compileDir, `${fileName}.out`),

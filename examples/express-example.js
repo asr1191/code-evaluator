@@ -24,6 +24,7 @@ async function expressPOST() {
   // can be referred to using its ID. Can be a number or string.
   try {
     await evaluator.saveCode(5);
+    await evaluator.saveInput(5);
     await evaluator.runCode();
     // await evaluator.runCode()
     // If evaluation should happen with existing code and input files, the

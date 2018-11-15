@@ -14,15 +14,15 @@ const writeFile = promisify(fs.writeFile);
  * @param {string} id
  * @param {EvalInstance} evalInstance
  */
-async function saveCode(id, evalInstance, codeDir) {
+async function saveCode(id, evalInstance, inputDir) {
   const fileName = `${evalInstance.language}_${id}`;
-  const codeLocation = path.resolve(codeDir, fileName);
+  const inputLocation = path.resolve(inputDir, `${fileName}.input`);
 
   try {
-    await writeFile(codeLocation, evalInstance.code, { flag: 'wx' });
-  } catch (codeWriteFileError) {
-    codeWriteFileError.code = 'CODE_EXISTS';
-    throw codeWriteFileError;
+    await writeFile(inputLocation, evalInstance.input, { flag: 'wx' });
+  } catch (inputWriteFileError) {
+    inputWriteFileError.code = 'INPUT_EXISTS';
+    throw inputWriteFileError;
   }
   return fileName;
 }

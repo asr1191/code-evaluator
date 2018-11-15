@@ -3,6 +3,7 @@ const path = require('path');
 const { promisify } = require('util');
 const languageEvaluatorObjects = require('./lib/languages');
 const saveCodeFn = require('./lib/save-code');
+const saveInputFn = require('./lib/save-input');
 
 const fsUnlink = promisify(fs.unlink);
 const parentModuleDirectory = path.dirname(module.parent.filename);
@@ -45,7 +46,24 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      */
     saveCode: async function saveCode(id) {
       try {
-        this.fileName = await saveCodeFn(id, evalInstance, this.codeDir, this.inputDir);
+        this.fileName = await saveCodeFn(id, evalInstance, this.codeDir);
+      } catch (Err) {
+        if (Err.code === 127) {
+          Err.code = 'COMPINT_UNAVAILABLE';
+        }
+        throw Err;
+      }
+    },
+    /**
+     * Method that takes in an id along with the object's properties to save
+     * the code and inputs to a file. Code file has no extension, while input
+     * files have an `.input` extension.
+     *
+     * @param {string} id
+     */
+    saveInput: async function saveInput(id) {
+      try {
+        this.fileName = await saveInputFn(id, evalInstance, this.inputDir);
       } catch (Err) {
         if (Err.code === 127) {
           Err.code = 'COMPINT_UNAVAILABLE';

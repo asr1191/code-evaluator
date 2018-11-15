@@ -49,7 +49,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    saveCode: async function (id) {
+    async saveCode(id) {
       try {
         this.fileName = await saveCodeFn(id, evalInstance, this.codeDir);
       } catch (Err) {
@@ -63,7 +63,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    saveInput: async function (id) {
+    async saveInput(id) {
       try {
         this.fileName = await saveInputFn(id, evalInstance, this.inputDir);
       } catch (Err) {
@@ -76,13 +76,13 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    compileCode: async function () {
+    async compileCode() {
       const languageEvaluatorInstance = this.languageEvaluator(
         this.fileName,
         this.codeDir,
         this.inputDir,
         this.compileDir,
-      )
+      );
       try {
         if (languageEvaluatorInstance.isCompilable) {
           console.log(`${this.language} is compilable.`);
@@ -91,7 +91,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
           console.err(`${this.language} does not need compilation`);
         }
       } catch (Err) {
-        Err.code = "COMP_ERROR";
+        Err.code = 'COMP_ERROR';
         throw Err;
       }
     },
@@ -100,13 +100,13 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    runCode: async function () {
+    async runCode() {
       const languageEvaluatorInstance = this.languageEvaluator(
         this.fileName,
         this.codeDir,
         this.inputDir,
         this.compileDir,
-      )
+      );
       try {
         this.resultSet = await languageEvaluatorInstance.runCode();
       } catch (Err) {
@@ -123,13 +123,13 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
      * @async
      * @function
      */
-    clearFiles: async function () {
+    async clearFiles() {
       const languageEvaluatorInstance = this.languageEvaluator(
         this.fileName,
         this.codeDir,
         this.inputDir,
         this.compileDir,
-      )
+      );
       try {
         await fsUnlink(path.resolve(this.codeDir, this.fileName));
         await fsUnlink(path.resolve(this.inputDir, `${this.fileName}.input`));

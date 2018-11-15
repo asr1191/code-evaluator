@@ -1,6 +1,6 @@
 {
   "name": "code-evaluator",
-  "version": "1.6.2",
+  "version": "1.7.1",
   "description": "API that compiles/interprets source code for different languages and returns their outputs.",
   "homepage": "https://github.com/asr1191/code-evaluator#readme",
   "bugs": "https://github.com/asr1191/code-evaluator/issues",
@@ -8,7 +8,6 @@
   "os": ["linux", "!win32"],
   "main": "./src/index.js",
   "scripts": {
-    "test": "node ./src/test/index.test.js",
     "lint": "eslint ./src/",
     "lint-fix": "eslint --fix ./src/"
   },

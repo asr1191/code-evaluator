@@ -4,25 +4,38 @@ const codeEvaluator = require('../src/index');
 // saveCode() and runCode() methods.
 const codeDir = '../replInstances/codeFiles/';
 const inputDir = '../replInstances/inputFiles/';
+const compileDir = '../replInstances/binaries/';
 
 // can be used in an Express get() or post() functions.
 async function expressPOST() {
   const evalInstance = {
     // testlanguage is an example language, which returns a sample STDOUT and
     // STDIN message, after a delay of 500ms.
-    language: 'testlanguage',
-    input: 'jessal kid',
-    code: 'name = raw_input().split(" ")\nprint(name[0] + " is a good " + name[1])',
+    language: 'cpp',
+    // input: 'jessal kid',
+    // code: 'name = raw_input().split(" ")\nprint(name[0] + " is a good " + name[1])',
+    input: 'Compilers',
+    code: '#include<iostream>\n'+
+          'using namespace std;\n'+
+          'int main() {\n'+
+          '   char name[10];'+
+          '   cin >> name;\n'+
+          '   cout << "Hello " << name < "!";\n'+
+          ' return 0;\n'+
+          '}',
   };
   // Calling CodeEvaluator constructor function with an EvalInstance as
   // arguement to return a CodeEvaluator object, along with paths to store
   // the user's code and inputs that are to be run against the code.
-  const evaluator = codeEvaluator(evalInstance, codeDir, inputDir);
+  const evaluator = codeEvaluator(evalInstance, codeDir, inputDir, compileDir);
 
   // passing an ID to the evaluator object, so that each compile request
   // can be referred to using its ID. Can be a number or string.
+  let id = 13;
   try {
-    await evaluator.saveCode(5);
+    await evaluator.saveCode(id);
+    await evaluator.saveInput(id);
+    await evaluator.compileCode();
     await evaluator.runCode();
     // await evaluator.runCode()
     // If evaluation should happen with existing code and input files, the
@@ -30,7 +43,7 @@ async function expressPOST() {
     console.log(`stdout: ${evaluator.resultSet.stdout}`);
     console.log(`stderr: ${evaluator.resultSet.stderr}`);
 
-    // Calling clearFiles() to delete the code and input files that were
+    // Calling clearFiles() to delete the code, input, and binary files that were
     // created.
     await evaluator.clearFiles();
 
@@ -48,6 +61,11 @@ async function expressPOST() {
     } else if (e.code === 'COMPINT_UNAVAILABLE') {
       console.log(e.stack);
       console.log('Compiler/Interpreter not installed, check installation.');
+    } else if (e.code === 'COMP_ERROR') {
+      console.log('Compilation Error!')
+      console.log(`stdout: ${evaluator.resultSet.stdout}`);
+      console.log(`stderr: ${evaluator.resultSet.stderr}`);
+      await evaluator.clearFiles();
     } else {
       console.log(e.stack);
     }

@@ -1,6 +1,6 @@
 {
   "name": "code-evaluator",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "API that compiles/interprets source code for different languages and returns their outputs.",
   "homepage": "https://github.com/asr1191/code-evaluator#readme",
   "bugs": "https://github.com/asr1191/code-evaluator/issues",

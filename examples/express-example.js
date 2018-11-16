@@ -2,9 +2,9 @@ const codeEvaluator = require('../src/index');
 
 // Paths to store code and inputs, which will later be run using the
 // saveCode() and runCode() methods.
-const codeDir = '../replInstances/codeFiles/';
-const inputDir = '../replInstances/inputFiles/';
-const compileDir = '../replInstances/binaries/';
+const codeDir = '../evalInstanceFiles/codeFiles/';
+const inputDir = '../evalInstanceFiles/inputFiles/';
+const compileDir = '../evalInstanceFiles/binaries/';
 
 // can be used in an Express get() or post() functions.
 async function expressPOST() {
@@ -52,23 +52,23 @@ async function expressPOST() {
   //  2. Finding existing input file. (Error Code: INPUT_EXISTS)
   //  3. Compilers/interpreters not installed (Error Code: COMPINT_UNAVAILABLE)
   } catch (e) {
-    if (e.code === 'CODE_EXISTS') {
-      console.log('Codefile exists. Check ID');
-      console.log(e.stack);
-    } else if (e.code === 'INPUT_EXISTS') {
-      console.log(e.stack);
-      console.log('Input file exists. Check ID');
-    } else if (e.code === 'COMPINT_UNAVAILABLE') {
-      console.log(e.stack);
-      console.log('Compiler/Interpreter not installed, check installation.');
-    } else if (e.code === 'COMP_ERROR') {
-      console.log('Compilation Error!');
-      console.log(`stdout: ${evaluator.resultSet.stdout}`);
-      console.log(`stderr: ${evaluator.resultSet.stderr}`);
-      await evaluator.clearFiles();
+    if (e.code === 'CODEDIR_NOEXIST') {
+      console.error(e.stack);
+    } else if (e.code === 'CODEFILE_NOWRITE') {
+      console.error(e.stack);
+    } else if (e.code === 'INPUTDIR_NOEXIST') {
+      console.error(e.stack);
+    } else if (e.code === 'INPUTFILE_NOWRITE') {
+      console.error(e.stack);
+    } else if (e.code === 'COMPILATION_ERROR') {
+      console.error(e.stack);
+    } else if (e.code === 'CODERUN_ERROR') {
+      console.error(e.stack);
     } else {
-      console.log(e.stack);
+      console.error(e.stack);
     }
+  } finally {
+    await evaluator.clearFiles();
   }
 }
 

@@ -1,11 +1,24 @@
-module.exports = function testlanguage() {
-  return new Promise((resolve) => {
-    const resultSet = {
-      stdout: 'SAMPLE STDOUT MESSAGE',
-      stderr: 'SAMPLE STDERR MESSAGE',
-    };
-    setTimeout(() => {
-      resolve(resultSet);
-    }, 500);
-  });
-};
+function testlanguage() {
+  const languageEvaluatorObject = {
+    isCompilable: false,
+    testReject: false,
+
+    runCode: function runCode() {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (!this.testReject) {
+            resolve({
+              stdout: 'STDOUT Example Output',
+              stderr: 'STDERR Example Output',
+            });
+          } else {
+            reject(new Error('Sample Rejection Error in TestLanguage'));
+          }
+        }, 2000);
+      });
+    },
+  };
+  return languageEvaluatorObject;
+}
+
+module.exports = testlanguage;

@@ -87,7 +87,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
           console.log(`${this.language} does not need compilation`);
         }
       } catch (Err) {
-        Err.code = 'COMP_ERROR';
+        Err.code = 'COMPILATION_ERROR';
         throw Err;
       }
     },
@@ -101,7 +101,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
         this.resultSet = await this.languageEvaluatorInstance.runCode();
       } catch (Err) {
         if (Err.code === 127) {
-          Err.code = 'COMPINT_UNAVAILABLE';
+          Err.code = 'CODERUN_ERROR';
         }
         throw Err;
       }

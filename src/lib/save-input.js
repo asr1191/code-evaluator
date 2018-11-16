@@ -18,10 +18,16 @@ async function saveCode(id, evalInstance, inputDir) {
   const fileName = `${evalInstance.language}_${id}`;
   const inputLocation = path.resolve(inputDir, `${fileName}.input`);
 
+  if (!fs.existsSync(inputDir)) {
+    const inputDirNoExistError = new Error('Inputfile directory does not exists!');
+    inputDirNoExistError.code = 'INPUTDIR_NOEXIST';
+    throw inputDirNoExistError;
+  }
+
   try {
     await writeFile(inputLocation, evalInstance.input, { flag: 'wx' });
   } catch (inputWriteFileError) {
-    inputWriteFileError.code = 'INPUT_EXISTS';
+    inputWriteFileError.code = 'INPUTFILE_NOWRITE';
     throw inputWriteFileError;
   }
   return fileName;

@@ -15,14 +15,14 @@ async function expressPOST() {
     // input: 'jessal kid',
     // code: 'name = raw_input().split(" ")\nprint(name[0] + " is a good " + name[1])',
     input: 'Compilers',
-    code: '#include<iostream>\n'+
-          'using namespace std;\n'+
-          'int main() {\n'+
-          '   char name[10];'+
-          '   cin >> name;\n'+
-          '   cout << "Hello " << name < "!";\n'+
-          ' return 0;\n'+
-          '}',
+    code: '#include<iostream>\n'
+        + 'using namespace std;\n'
+        + 'int main() {\n'
+        + '   char name[10];'
+        + '   cin >> name;\n'
+        + '   cout << "Hello " << name < "!";\n'
+        + ' return 0;\n'
+        + '}',
   };
   // Calling CodeEvaluator constructor function with an EvalInstance as
   // arguement to return a CodeEvaluator object, along with paths to store
@@ -31,7 +31,7 @@ async function expressPOST() {
 
   // passing an ID to the evaluator object, so that each compile request
   // can be referred to using its ID. Can be a number or string.
-  let id = 13;
+  const id = 13;
   try {
     await evaluator.saveCode(id);
     await evaluator.saveInput(id);
@@ -62,7 +62,7 @@ async function expressPOST() {
       console.log(e.stack);
       console.log('Compiler/Interpreter not installed, check installation.');
     } else if (e.code === 'COMP_ERROR') {
-      console.log('Compilation Error!')
+      console.log('Compilation Error!');
       console.log(`stdout: ${evaluator.resultSet.stdout}`);
       console.log(`stderr: ${evaluator.resultSet.stderr}`);
       await evaluator.clearFiles();

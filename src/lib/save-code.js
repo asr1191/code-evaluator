@@ -18,12 +18,19 @@ async function saveCode(id, evalInstance, codeDir) {
   const fileName = `${evalInstance.language}_${id}`;
   const codeLocation = path.resolve(codeDir, fileName);
 
+  if (!fs.existsSync(codeDir)) {
+    const codeDirNoExistError = new Error('Codefile directory does not exists!');
+    codeDirNoExistError.code = 'CODEDIR_NOEXIST';
+    throw codeDirNoExistError;
+  }
+
   try {
     await writeFile(codeLocation, evalInstance.code, { flag: 'wx' });
-  } catch (codeWriteFileError) {
-    codeWriteFileError.code = 'CODE_EXISTS';
-    throw codeWriteFileError;
+  } catch (codeFileWriteError) {
+    codeFileWriteError.code = 'CODEFILE_NOWRITE';
+    throw codeFileWriteError;
   }
+
   return fileName;
 }
 

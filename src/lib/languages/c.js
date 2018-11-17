@@ -28,7 +28,12 @@ function c(fileName, codeDir, inputDir, compileDir) {
       return new Promise((resolve, reject) => {
         function handleExecOutput(err, stdout, stderr) {
           if (err) {
-            reject(err);
+            if (err.code === 1) {
+              const compileTimeError = err;
+              compileTimeError.stdout = stdout;
+              compileTimeError.stderr = stderr;
+              resolve(compileTimeError);
+            } else reject(err);
           } else {
             resolve({
               stdout,

@@ -44,6 +44,15 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
         this.compileDir,
       );
     },
+    instantiateLanguageEvaluator(id) {
+      this.fileName = `${this.language}_${id}`;
+      this.languageEvaluatorInstance = this.languageEvaluator(
+        this.fileName,
+        this.codeDir,
+        this.inputDir,
+        this.compileDir,
+      );
+    },
     /**
      * Saves a codefile with the corresponding `id`.
      *
@@ -54,6 +63,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
     async saveCode(id) {
       try {
         this.fileName = await saveCodeFn(id, evalInstance, this.codeDir);
+        this.instantiateLanguageEvaluator();
       } catch (Err) {
         throw Err;
       }
@@ -81,14 +91,20 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
     async compileCode() {
       try {
         if (this.languageEvaluatorInstance.isCompilable) {
-          console.log(`${this.language} is compilable.`);
           this.resultSet = await this.languageEvaluatorInstance.compileCode();
+          return true;
         } else {
-          console.log(`${this.language} does not need compilation`);
+          console.error(`${this.language} does not need compilation`);
         }
       } catch (Err) {
-        Err.code = 'COMPILATION_ERROR';
-        throw Err;
+        if (Err.code === 1){
+          this.resultSet.stdout = Err.stdout;
+          this.resultSet.stderr = Err.stderr;
+          return false;
+        } else {
+          Err.code = 'COMPILATION_ERROR';
+          throw Err;
+        }
       }
     },
     /**
@@ -100,9 +116,7 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
       try {
         this.resultSet = await this.languageEvaluatorInstance.runCode();
       } catch (Err) {
-        if (Err.code === 127) {
-          Err.code = 'CODERUN_ERROR';
-        }
+        Err.code = 'CODERUN_ERROR';
         throw Err;
       }
     },
@@ -125,8 +139,6 @@ function createEvaluator(evalInstance, codeDirRelative, inputDirRelative, compil
       }
     },
   };
-
-  evaluator.instantiateLanguageEvaluator();
   return evaluator;
 }
 

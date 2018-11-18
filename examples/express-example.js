@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const codeEvaluator = require('../src/index');
+const CodeEvaluator = require('../src/index');
 
 // Paths to store code and inputs, which will later be run using the
 // saveCode() and runCode() methods.
@@ -11,6 +11,12 @@ const compileDir = '../evalInstanceFiles/binaries/';
 async function expressPOST() {
   // testlanguage is an example language, which returns a sample STDOUT and
   // STDIN message, after a delay of 2000ms.
+  const evalInstanceTestLanguage = {
+    language: 'testlanguage',
+    input: 'random input',
+    code: 'random code',
+  };
+
   const evalInstancePython2 = {
     language: 'python2',
     input: 'jessal kid',
@@ -38,7 +44,7 @@ async function expressPOST() {
   // Calling CodeEvaluator constructor function with an EvalInstance as
   // arguement to return a CodeEvaluator object, along with paths to store
   // the user's code and inputs that are to be run against the code.
-  const evaluator = codeEvaluator(evalInstanceCpp, codeDir, inputDir, compileDir);
+  const evaluator = new CodeEvaluator(evalInstanceTestLanguage, codeDir, inputDir, compileDir);
 
   // passing an ID to the evaluator object, so that each compile request
   // can be referred to using its ID. Can be a number or string.

@@ -129,9 +129,13 @@ class CodeEvaluator {
    */
   async clearFiles() {
     try {
-      await fsUnlink(path.resolve(this.codeDir, this.fileName));
-      await fsUnlink(path.resolve(this.inputDir, `${this.fileName}.input`));
-      if (this.languageEvaluatorInstance.isCompilable) {
+      if (fs.existsSync(path.resolve(this.codeDir, this.fileName))) {
+        await fsUnlink(path.resolve(this.codeDir, this.fileName));
+      }
+      if (fs.existsSync(path.resolve(this.inputDir, `${this.fileName}.input`))) {
+        await fsUnlink(path.resolve(this.inputDir, `${this.fileName}.input`));
+      }
+      if (fs.existsSync(path.resolve(this.inputDir, `${this.fileName}.out`))) {
         await fsUnlink(path.resolve(this.compileDir, `${this.fileName}.out`));
       }
     } catch (Err) {

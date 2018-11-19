@@ -91,9 +91,7 @@ class CodeEvaluator {
     try {
       if (this.languageEvaluatorInstance.isCompilable) {
         this.resultSet = await this.languageEvaluatorInstance.compileCode();
-        return true;
       }
-      console.error(`${this.evalInstance.language} does not need compilation`);
       return true;
     } catch (Err) {
       if (Err.code === 1) {

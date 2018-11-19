@@ -32,7 +32,7 @@ function cpp(fileName, codeDir, inputDir, compileDir) {
               const compileTimeError = err;
               compileTimeError.stdout = stdout;
               compileTimeError.stderr = stderr;
-              resolve(compileTimeError);
+              reject(compileTimeError);
             } else reject(err);
           } else {
             resolve({

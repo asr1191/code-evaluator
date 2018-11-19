@@ -11,7 +11,7 @@ function cpp(fileName, codeDir, inputDir, compileDir) {
     runCode: function runCode() {
       return new Promise((resolve, reject) => {
         function handleExecOutput(err, stdout, stderr) {
-          if (err && err.code !== 1) {
+          if (err && err.code !== 1 && err.code !== 139) {
             reject(err);
           } else {
             resolve({

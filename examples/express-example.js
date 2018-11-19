@@ -5,7 +5,7 @@ const CodeEvaluator = require('../src/index');
 // saveCode() and runCode() methods.
 const codeDir = '../evalInstanceFiles/codeFiles/';
 const inputDir = '../evalInstanceFiles/inputFiles/';
-const compileDir = '../evalInstanceFiles/binaries/';
+const compileDir = '../evalInstanceFiles/compileFiles/';
 
 // can be used in an Express get() or post() functions.
 async function expressPOST() {
@@ -23,33 +23,30 @@ async function expressPOST() {
     code: 'name = raw_input().split(" ")\nprint(name[0] + " is a good " + name[1])',
   };
 
+  const evalInstanceC = {
+    language: 'c',
+    input: 'World!',
+    code: `#include <stdio.h>
+    int main()
+    {
+      char word[20];
+      scanf("%s", &word);
+      printf("Hello %s", word);
+      return 0;
+    }`,
+  };
+
   const evalInstanceCpp = {
     language: 'cpp',
     input: 'Jessal',
-    code: '#include<iostream>\n'
-        + 'using namespace std;\n'
-        + 'int main() {\n'
-        + '   char name[10];'
-        + '   cin >> name;\n'
-        + '   cout << "Hello " << name << "!";\n'
-        + ' return 0;\n'
-        + '}',
-  };
-
-  const evalInstanceJava = {
-    language: 'java',
-    input: 'Jessal',
-    code: `import java.util.Scanner;
-    public class Main
-    {
-    
-        public static void main(String args[])
-        {
-            Scanner sc = new Scanner(System.in);
-            String str = sc.next();
-            System.out.println("Hello "+str);
-        }
-    }`,
+    code: `#include<iostream>
+        using namespace std;
+        int main() {
+           char name[10];
+           cin >> name;
+           cout << "Hello " << name << "!";
+         return 0;
+        }`,
   };
 
   const evalInstanceCppHeapOverflow = {
@@ -71,7 +68,7 @@ async function expressPOST() {
   // Calling CodeEvaluator constructor function with an EvalInstance as
   // arguement to return a CodeEvaluator object, along with paths to store
   // the user's code and inputs that are to be run against the code.
-  const evaluator = new CodeEvaluator(evalInstanceCppHeapOverflow, codeDir, inputDir, compileDir);
+  const evaluator = new CodeEvaluator(evalInstanceCpp, codeDir, inputDir, compileDir);
 
   // passing an ID to the evaluator object, so that each compile request
   // can be referred to using its ID. Can be a number or string.

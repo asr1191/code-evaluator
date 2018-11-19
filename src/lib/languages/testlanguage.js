@@ -14,7 +14,7 @@ function testlanguage() {
           } else {
             reject(new Error('Sample Rejection Error in TestLanguage'));
           }
-        }, 2000);
+        }, 500);
       });
     },
   };

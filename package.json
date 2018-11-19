@@ -1,6 +1,6 @@
 {
   "name": "code-evaluator",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "description": "API that compiles/interprets source code for different languages and returns their outputs.",
   "homepage": "https://github.com/asr1191/code-evaluator#readme",
   "bugs": "https://github.com/asr1191/code-evaluator/issues",
@@ -14,7 +14,8 @@
     "lint": "eslint ./src/",
     "lint-fix": "eslint --fix ./src/",
     "example": "node ./examples/express-example.js",
-    "postinstall": "mkdir ./evalInstanceFiles && mkdir ./evalInstanceFiles/codeFiles && mkdir ./evalInstanceFiles/binaries && mkdir ./evalInstanceFiles/inputFiles"
+    "postinstall": "mkdir ./evalInstanceFiles && mkdir ./evalInstanceFiles/codeFiles && mkdir ./evalInstanceFiles/compileFiles && mkdir ./evalInstanceFiles/inputFiles",
+    "test-languages": "mocha ./src/test/index.test.js"
   },
   "author": "Amal S Raj <amalsraj95@gmail.com>",
   "license": "GPL-3.0-only",

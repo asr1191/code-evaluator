@@ -15,7 +15,7 @@
     "lint-fix": "eslint --fix ./src/",
     "example": "node ./examples/express-example.js",
     "postinstall": "mkdir ./evalInstanceFiles && mkdir ./evalInstanceFiles/codeFiles && mkdir ./evalInstanceFiles/compileFiles && mkdir ./evalInstanceFiles/inputFiles",
-    "test-languages": "mocha ./src/test/index.test.js"
+    "test": "mocha ./src/test/index.test.js"
   },
   "author": "Amal S Raj <amalsraj95@gmail.com>",
   "license": "GPL-3.0-only",

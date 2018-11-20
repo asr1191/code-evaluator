@@ -1,7 +1,7 @@
 # Code Evaluator
 
 #### Unstable Alpha Version, Use at your own risk.
-[![Build Status](https://travis-ci.com/asr1191/code-evaluator.svg?branch=master)](https://travis-ci.com/asr1191/code-evaluator)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bfb79aecc3cf4c0b943175ce360158b2)](https://www.codacy.com/app/asr1191/code-evaluator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=asr1191/code-evaluator&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.com/asr1191/code-evaluator.svg?branch=master)](https://travis-ci.com/asr1191/code-evaluator) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bfb79aecc3cf4c0b943175ce360158b2)](https://www.codacy.com/app/asr1191/code-evaluator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=asr1191/code-evaluator&amp;utm_campaign=Badge_Grade)
 
 Reads, compiles, runs source code in supported languages, and gives you an output.
 

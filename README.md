@@ -1,5 +1,8 @@
 # Code Evaluator
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/506f92323d4b4299b31ce19f98f7f761)](https://app.codacy.com/app/asr1191/code-evaluator?utm_source=github.com&utm_medium=referral&utm_content=asr1191/code-evaluator&utm_campaign=Badge_Grade_Dashboard)
+
+
 #### Unstable Alpha Version, Use at your own risk.
 
 Reads, compiles, runs source code in supported languages, and gives you an output.

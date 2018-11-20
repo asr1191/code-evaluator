@@ -1,2 +1,10 @@
 language: node_js
 sudo: enabled
+node_js: lts/*
+
+before_install:
+  - npm install -g npm
+  - apt-get install -y python2
+  - apt-get install -y python2
+  - apt-get install -y gcc
+  - apt-get install -y g++
